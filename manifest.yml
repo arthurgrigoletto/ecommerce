@@ -1,0 +1,6 @@
+---
+applications:
+  - name: ecommerce-minutrade
+    memory: 128M
+    instances: 1
+    host: ecommerce-minutrade
