@@ -1,0 +1,15 @@
+.navbar {
+  background: transparent !important;
+  border-radius: 5px;
+  color: #000;
+}
+
+.items {
+  padding-right: 50px;
+  padding-top: 5px;
+}
+
+.icon {
+  border-radius: 50%;
+  margin-left: 10px;
+}
