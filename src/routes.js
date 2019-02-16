@@ -7,6 +7,7 @@ const multerConfig = require('./config/multer');
 const AuthentificationController = require('./controllers/api/AuthController');
 const CommentController = require('./controllers/api/CommentController');
 const ProductController = require('./controllers/api/ProductController');
+const RateController = require('./controllers/api/RateController');
 
 const routes = express.Router();
 
@@ -79,12 +80,12 @@ routes.put(
 );
 
 // @route   DELETE api/products/:id
-// @desc    Delete an Article
+// @desc    Delete an Product
 // @access  Private
 routes.delete(
   '/products/:id',
   passport.authenticate('jwt', { session: false }),
-  ProductController.remove,
+  ProductController.destroy,
 );
 
 /*
@@ -96,12 +97,12 @@ routes.delete(
 */
 
 // @route   GET api/:id/comments
-// @desc    GET Article's Comments
+// @desc    GET Product's Comments
 // @access  Public
 routes.get('/:id/comments', CommentController.getComments);
 
 // @route   POST api/:id/comments
-// @desc    Create Article's Comment
+// @desc    Create Product's Comment
 // @access  Private
 routes.post(
   '/:id/comments',
@@ -109,8 +110,8 @@ routes.post(
   CommentController.addComment,
 );
 
-// @route   PUT api/:id/comments
-// @desc    Update Article's Comment
+// @route   PUT api/:id/comments/:commentId
+// @desc    Update Product's Comment
 // @access  Private
 routes.put(
   '/:id/comments/:commentId',
@@ -119,12 +120,53 @@ routes.put(
 );
 
 // @route   Delete api/:id/comments
-// @desc    Delete Article's Comment
+// @desc    Delete Product's Comment
 // @access  Private
 routes.delete(
   '/:id/comments/:commentId',
   passport.authenticate('jwt', { session: false }),
   CommentController.deleteComment,
+);
+
+/*
+================================================================================
+================================================================================
+================================ RATES ROUTES ==================================
+================================================================================
+================================================================================
+*/
+
+// @route   GET api/:id/rates
+// @desc    GET Product's Rates
+// @access  Public
+routes.get('/:id/rates', RateController.getRate);
+
+// @route   GET api/:id/rates/average
+// @desc    GET Product's Rates
+// @access  Public
+routes.get('/:id/rates/average', RateController.getRateAverage);
+
+// @route   POST api/:id/rates
+// @desc    Create Product's Rate
+// @access  Private
+routes.post('/:id/rates', passport.authenticate('jwt', { session: false }), RateController.addRate);
+
+// @route   PUT api/:id/rates
+// @desc    Update Product's Rate
+// @access  Private
+routes.put(
+  '/:id/rates/:rateId',
+  passport.authenticate('jwt', { session: false }),
+  RateController.updateRate,
+);
+
+// @route   Delete api/:id/rates
+// @desc    Delete Product's Rate
+// @access  Private
+routes.delete(
+  '/:id/rates/:rateId',
+  passport.authenticate('jwt', { session: false }),
+  RateController.unRate,
 );
 
 module.exports = routes;

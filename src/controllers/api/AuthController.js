@@ -58,6 +58,9 @@ const login = (req, res) => {
 const register = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
   const { key, location: avatar = '' } = req.file;
+  const {
+    name, email, password, street, number, zip, city, state, cpf,
+  } = req.body;
 
   // Check Validation
   if (!isValid) {
@@ -71,9 +74,17 @@ const register = (req, res) => {
     }
 
     const newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
+      name,
+      email,
+      password,
+      cpf,
+      address: {
+        street,
+        number,
+        zip,
+        city,
+        state,
+      },
       avatar,
       key,
     });

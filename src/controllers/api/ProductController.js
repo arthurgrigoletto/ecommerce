@@ -45,7 +45,7 @@ const store = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, price } = req.body;
   const { id } = req.params;
 
   return Product.findById(id).then((product) => {
@@ -62,6 +62,9 @@ const update = async (req, res) => {
 
     // New Description
     product.description = description || product.description;
+
+    // New Price
+    product.price = price || product.price;
 
     // Updated_at
     product.updatedAt = new Date();

@@ -1,3 +1,5 @@
+/* eslint func-names: ["error", "never"] */
+
 require('dotenv').config();
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
@@ -27,7 +29,7 @@ const ProductSchema = new Schema({
   },
   banner: String,
   key: String,
-  rate: [
+  rates: [
     {
       user: {
         type: Schema.Types.ObjectId,
@@ -36,6 +38,7 @@ const ProductSchema = new Schema({
       rating: {
         type: Number,
         default: 0,
+        max: 5,
       },
     },
   ],

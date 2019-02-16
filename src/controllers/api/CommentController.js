@@ -37,7 +37,7 @@ const addComment = (req, res) => {
 
 // Get comments by Product
 const getComments = async (req, res) => Product.findById(req.params.id)
-  .then(product => res.json(product))
+  .then(product => res.json(product.comments))
   .catch(() => res.status(404).json({ productnotfound: 'No Article Found' }));
 
 // General Method

@@ -1,3 +1,5 @@
+/* eslint func-names: ["error", "never"] */
+
 require('dotenv').config();
 const mongoose = require('mongoose');
 
