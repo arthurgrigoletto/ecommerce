@@ -4,42 +4,83 @@ const multer = require('multer');
 const multerConfig = require('./config/multer');
 
 // Import Controllers
-const AuthentificationController = require('./controllers/api/AuthController');
+const UserController = require('./controllers/api/UserController');
 const CommentController = require('./controllers/api/CommentController');
 const ProductController = require('./controllers/api/ProductController');
 const RateController = require('./controllers/api/RateController');
+const CartController = require('./controllers/api/CartController');
 
 const routes = express.Router();
 
 /*
 ================================================================================
 ================================================================================
-========================== AUTHENTIFICATION ROUTES =============================
+================================ USERS ROUTES ==================================
 ================================================================================
 ================================================================================
 */
 
-// @route   POST api/auth/login
+// @route   POST api/users/login
 // @desc    Login User / Returning JWT Token
 // @access  Public
-routes.post('/auth/login', AuthentificationController.login);
+routes.post('/users/login', UserController.login);
 
-// @route   POST api/auth/register
+// @route   POST api/users/register
 // @desc    Register User
 // @access  Public
-routes.post(
-  '/auth/register',
+routes.post('/users/register', multer(multerConfig).single('file'), UserController.register);
+
+// @route   PUT api/users/
+// @desc    Update User
+// @access  Private
+routes.put(
+  '/users',
+  passport.authenticate('jwt', { session: false }),
   multer(multerConfig).single('file'),
-  AuthentificationController.register,
+  UserController.updateUser,
 );
 
-// @route   GET api/auth/current
+// @route   GET api/users/current
 // @desc    Return Current User
 // @access  Private
 routes.get(
-  '/auth/current',
+  '/users/current',
   passport.authenticate('jwt', { session: false }),
-  AuthentificationController.current,
+  UserController.current,
+);
+
+/*
+================================================================================
+================================================================================
+================================ CART ROUTES ===================================
+================================================================================
+================================================================================
+*/
+// @route   GET api/cart
+// @desc    GET Products on user cart
+// @access  Private
+routes.get(
+  '/cart',
+  passport.authenticate('jwt', { session: false }),
+  CartController.getProductsOnCart,
+);
+
+// @route   POST api/cart
+// @desc    Add Product to user cart
+// @access  Private
+routes.post(
+  '/cart',
+  passport.authenticate('jwt', { session: false }),
+  CartController.addProductToCart,
+);
+
+// @route   DELETE api/cart/:id
+// @desc    Delete an Product from Cart
+// @access  Private
+routes.delete(
+  '/cart/:id',
+  passport.authenticate('jwt', { session: false }),
+  CartController.removeProductFromCart,
 );
 
 /*

@@ -1,4 +1,5 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+/* eslint no-param-reassign: ["error", { "props": false }] */
 
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
@@ -103,6 +104,60 @@ const register = (req, res) => {
   });
 };
 
+const updateUser = (req, res) => {
+  const errors = {};
+  const {
+    name, email, password, street, number, zip, city, state, cpf, birthday,
+  } = req.body;
+
+  return User.findById(req.user._id).then((user) => {
+    // New Avatar
+    if (req.file) {
+      const { key, location: avatar = '' } = req.file;
+
+      user.avatar = avatar;
+      user.key = key;
+    }
+
+    // New Name
+    user.name = name || user.name;
+
+    // New Email
+    user.email = email || user.email;
+
+    // New Street
+    user.address.street = street || user.address.street;
+
+    // New Nuber
+    user.address.number = number || user.address.number;
+
+    // New ZipCode
+    user.address.zip = zip || user.address.zip;
+
+    // New City
+    user.address.city = city || user.address.city;
+
+    // New State
+    user.address.state = state || user.address.state;
+
+    // New CPF
+    user.cpf = cpf || user.cpf;
+
+    // New BirthDay
+    user.birthday = birthday || user.birthday;
+
+    // Check Password
+    return bcrypt.compare(password, user.password).then((isMatch) => {
+      if (!isMatch) {
+        errors.password = 'Password incorrect';
+        return res.status(400).json(errors);
+      }
+
+      return user.save().then(newUser => res.json(newUser));
+    });
+  });
+};
+
 const current = (req, res) => res.json({
   _id: req.user._id,
   email: req.user.email,
@@ -113,5 +168,6 @@ const current = (req, res) => res.json({
 module.exports = {
   login,
   register,
+  updateUser,
   current,
 };

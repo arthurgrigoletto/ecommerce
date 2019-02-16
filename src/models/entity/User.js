@@ -59,6 +59,9 @@ const UserSchema = new Schema({
       name: {
         type: String,
       },
+      price: {
+        type: Number,
+      },
     },
   ],
   birthday: {
