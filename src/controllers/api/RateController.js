@@ -11,21 +11,6 @@ const getRate = async (req, res) => {
   return res.json(product.rates);
 };
 
-const sum = (a, b) => a + b;
-
-const getRateAverage = async (req, res) => {
-  const { id } = req.params;
-
-  const product = await Product.findById(id);
-
-  const ratings = product.rates.map(rate => rate.rating);
-  const total = ratings.reduce(sum, 0);
-
-  const average = total / ratings.length;
-
-  res.json({ average });
-};
-
 const addRate = (req, res) => {
   const { id: userId } = req.user;
   const { id: productId } = req.params;
@@ -88,7 +73,6 @@ const unRate = (req, res) => generalMethod('delete', req, res);
 
 module.exports = {
   getRate,
-  getRateAverage,
   addRate,
   updateRate,
   unRate,

@@ -4,6 +4,10 @@
   color: #000;
 }
 
+.nav-link {
+  color: #000 !important;
+}
+
 .items {
   padding-right: 50px;
   padding-top: 5px;

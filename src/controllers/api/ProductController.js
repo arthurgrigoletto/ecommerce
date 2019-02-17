@@ -31,12 +31,13 @@ const show = async (req, res) => {
 };
 
 const store = async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, price } = req.body;
   const { key, location: banner = '' } = req.file;
 
   const newProduct = new Product({
     name,
     description,
+    price,
     key,
     banner,
   });

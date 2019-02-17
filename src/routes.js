@@ -182,11 +182,6 @@ routes.delete(
 // @access  Public
 routes.get('/:id/rates', RateController.getRate);
 
-// @route   GET api/:id/rates/average
-// @desc    GET Product's Rates
-// @access  Public
-routes.get('/:id/rates/average', RateController.getRateAverage);
-
 // @route   POST api/:id/rates
 // @desc    Create Product's Rate
 // @access  Private
