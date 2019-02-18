@@ -43,6 +43,9 @@ const login = (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        avatar: user.avatar,
+        address: user.address,
+        birthday: user.birthday,
       };
 
       // Sign Token
@@ -163,6 +166,8 @@ const current = (req, res) => res.json({
   email: req.user.email,
   name: req.user.name,
   avatar: req.user.avatar,
+  address: req.user.address,
+  birthday: req.user.birthday,
 });
 
 module.exports = {

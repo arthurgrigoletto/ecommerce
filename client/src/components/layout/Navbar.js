@@ -29,7 +29,7 @@ class Navbar extends Component {
           <img
             src={user.avatar}
             className="rounded-circle z-depth-0"
-            alt="user"
+            alt={user.name}
             height="35"
           />
         </a>
@@ -39,9 +39,6 @@ class Navbar extends Component {
         >
           <Link className="dropdown-item" to="/edit">
             Edit
-          </Link>
-          <Link className="dropdown-item" to="/cart">
-            Cart
           </Link>
           <a className="dropdown-item" href="" onClick={this.onLogoutClick}>
             Logout
